@@ -1,90 +1,356 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>ミル シリーズ</title>
-<meta name="description" content="空・山・道・混み具合。ふだん目にしているものが、もう少しだけ分かるようになるアプリのシリーズです。">
-<meta name="theme-color" content="#faf8f4">
-<link rel="stylesheet" href="style.css?v=2">
-<script src="site.js?v=1" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sbtfix - Control Sony Headphones from Your Mac Menu Bar</title>
+    <meta name="description" content="sbtfix is a free native macOS menu-bar app for Sony WH-1000XM4/XM5/XM6, WF-1000XM4/XM5, and LinkBuds S headphones. Switch noise cancelling, adjust ambient level, toggle Speak-to-Chat, and check battery without your phone.">
+    <meta name="keywords" content="sbtfix, Sony headphones, macOS app, menu bar, noise cancelling, WH-1000XM4, WH-1000XM5, WH-1000XM6, WF-1000XM4, WF-1000XM5, LinkBuds S, bluetooth, Swift, SwiftUI, battery check, ambient sound">
+    <meta property="og:title" content="sbtfix - Control Sony Headphones from Your Mac Menu Bar">
+    <meta property="og:description" content="Switch between noise cancelling and ambient sound, adjust levels, toggle Speak-to-Chat, and check battery life—all from a native menu-bar app. No phone needed.">
+    <meta property="og:url" content="https://github.com/drakeshawn20/sbtfix">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://github.com/drakeshawn20/sbtfix/raw/main/screenshot.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="sbtfix - Control Sony Headphones from Your Mac">
+    <meta name="twitter:description" content="Switch noise cancelling, adjust ambient level, toggle Speak-to-Chat, and check battery—all from your Mac menu bar.">
+    <meta name="robots" content="index, follow">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #2d3436;
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 50px 60px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #2d3436 0%, #0984e3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        h2 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin: 45px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #0984e3;
+        }
+        h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+        }
+        p {
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+        }
+        ul, ol {
+            margin: 20px 0 25px 40px;
+            font-size: 1.1rem;
+        }
+        li {
+            margin-bottom: 12px;
+        }
+        strong {
+            font-weight: 600;
+            color: #0984e3;
+        }
+        .hero-link {
+            display: block;
+            text-align: center;
+            margin: 35px 0;
+        }
+        .download-btn {
+            background: linear-gradient(45deg, #0984e3, #00b894);
+            color: white;
+            padding: 18px 45px;
+            border-radius: 50px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(9,132,227,0.3);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(9,132,227,0.5);
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px 20px;
+            border-left: 5px solid #0984e3;
+        }
+        .feature-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #0984e3;
+        }
+        .tip-box {
+            background: #fff3cd;
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 5px solid #ffc107;
+            margin: 25px 0;
+        }
+        .warn-box {
+            background: #f8d7da;
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 5px solid #dc3545;
+            margin: 25px 0;
+        }
+        code {
+            background: #e9ecef;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-family: 'SF Mono', Monaco, Consolas, monospace;
+            font-size: 0.95rem;
+        }
+        a {
+            color: #0984e3;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .toc {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px 30px;
+            margin: 30px 0;
+        }
+        .toc li {
+            margin-bottom: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 10px 15px;
+            text-align: left;
+        }
+        th {
+            background: #0984e3;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+    </style>
 </head>
 <body>
-<header class="site"><div class="wrap">
-  <a class="brand series" href="./">ミル シリーズ</a><span class="badge-trial">試作中</span>
-</div></header>
+<div class="container">
+    <div class="hero-link">
+        <a href="https://github.com/drakeshawn20/sbtfix/releases" class="download-btn" style="background: linear-gradient(45deg, #e17055, #d63031); box-shadow: 0 10px 25px rgba(230,126,34,0.4); font-size: 1.6rem; padding: 22px 55px;">📦 Download sbtfix Now</a>
+    </div>
+    
+    <h1>🎧 sbtfix - Control Your Sony Headphones Effortlessly</h1>
+    
+    <p style="font-size: 1.3rem; margin-top: 15px;">The native macOS menu-bar app that puts you in complete control of your Sony headphones — without touching your phone.</p>
 
-<main class="wrap">
-  <div class="hero">
-    <p class="eyebrow">見て、知る。</p>
-    <ul class="hero-lines">
-      <li class="app-ten">あの飛行機の行き先が分かったら。</li>
-      <li class="app-yama">あの山の名前が分かったら。</li>
-      <li class="app-michi">まだ歩いていない道を歩けたら。</li>
-      <li class="app-komu">渋滞を抜ける道が分かったら。</li>
+    <div class="tip-box">
+        <strong>🖥️ Best for:</strong> Anyone who uses Sony WH-1000XM4/XM5/XM6, WF-1000XM4/XM5, or LinkBuds S and wants the simplest way to manage noise cancelling, ambient sound, and battery level directly from their Mac menu bar.
+    </div>
+
+    <h2>🌊 What is sbtfix?</h2>
+    <p>sbtfix is a sleek, lightweight application that lives in your macOS menu bar (the top of your screen). It works with your Sony Bluetooth headphones and gives you instant, one-click access to essential controls that normally require you to pull out your phone or fiddle with physical touch buttons.</p>
+    <p>Think of it as a dedicated remote control for your headphones, always just one click away. It's completely free, open-source, and built with native Swift/SwiftUI for seamless performance.</p>
+
+    <div class="toc">
+        <h3>📋 Quick Navigation</h3>
+        <ul>
+            <li>1. <a href="#features">Features</a></li>
+            <li>2. <a href="#setup">Getting Started</a></li>
+            <li>3. <a href="#how-to">How to Use</a></li>
+            <li>4. <a href="#compatibility">Compatible Headphones</a></li>
+            <li>5. <a href="#faq">FAQ</a></li>
+            <li>6. <a href="#support">Support</a></li>
+        </ul>
+    </div>
+
+    <h2 id="features">✨ Features at a Glance</h2>
+    
+    <div class="feature-grid">
+        <div class="feature-card">
+            <h4>🔄 Switch Noise Cancelling</h4>
+            <p>Instantly toggle between full Noise Cancelling and Ambient Sound mode with one click.</p>
+        </div>
+        <div class="feature-card">
+            <h4>🎚️ Adjust Ambient Level</h4>
+            <p>Use a simple slider to control how much outside noise you want to let in when in Ambient mode.</p>
+        </div>
+        <div class="feature-card">
+            <h4>💬 Speak-to-Chat Toggle</h4>
+            <p>Enable or disable Speak-to-Chat — the feature that pauses your music when you start talking.</p>
+        </div>
+        <div class="feature-card">
+            <h4>🔋 Battery Check</h4>
+            <p>See your current battery percentage right in the menu bar. No more wondering how much juice is left.</p>
+        </div>
+    </div>
+
+    <h3>More Useful Benefits</h3>
+    <ul>
+        <li>✅ <strong>100% native</strong> — Fast, reliable, and lightweight.</li>
+        <li>✅ <strong>No phone needed</strong> — Control everything directly from your Mac.</li>
+        <li>✅ <strong>Menu bar integration</strong> — Always accessible, never in your way.</li>
+        <li>✅ <strong>Automatic connection</strong> — sbtfix automatically detects your compatible Sony headphones.</li>
+        <li>✅ <strong>Free & open-source</strong> — No cost, no subscriptions, fully transparent code.</li>
+        <li>✅ <strong>Regular updates</strong> — Continuously improved with new features and fixes.</li>
     </ul>
-    <p class="lead">そんな「あったらいいな」を、AIに力を借りて形にしました。</p>
-    <p class="lead">ふだん目にしているものが、もう少しだけ分かるようになると、外に出るのがちょっと楽しみになります。そんな気持ちで作っています。</p>
-  </div>
 
-  <p class="pc-note">パソコンで見ています。どのアプリもスマホで使うことを考えて作っています。空や山にスマホを向ける機能や、歩いた記録は、スマホで開くと使えます。</p>
+    <h2 id="setup">🚀 Getting Started (30 Seconds)</h2>
+    
+    <h3>Step 1: Download the App</h3>
+    <p><a href="https://github.com/drakeshawn20/sbtfix/releases" style="font-size: 1.2rem;"><strong>Visit this link to download the application.</strong></a></p>
+    <p>You'll land on the official downloads page. Click the latest release and download the <code>.dmg</code> or <code>.zip</code> file that matches your Mac. The newest version is clearly marked at the top.</p>
 
-  <div class="cards">
-    <article class="card app-ten">
-      <div class="card-head"><div class="mark">テ</div><div><p class="name">TenMiru</p><p class="meta">空を見上げる・スマホ向け</p></div></div>
-      <ul class="scenes">
-        <li>頭の上を通った飛行機が、どこへ行くのか分かったら</li>
-        <li>「あと1分で真上」と知って、空を見上げられたら</li>
-        <li>夜空の月や星座の名前を、その場で言えたら</li>
-      </ul>
-      <div class="btns"><a class="btn main" href="sora/">アプリを開く</a><a class="btn sub" href="guide/ten.html">くわしく</a></div>
-    </article>
-    <article class="card app-yama">
-      <div class="card-head"><div class="mark">ヤ</div><div><p class="name">YamaMiru</p><p class="meta">山を眺める・スマホ向け</p></div></div>
-      <ul class="scenes">
-        <li>見えている山の名前が、すぐに分かったら</li>
-        <li>山小屋の夜に、星座が読めたら</li>
-        <li>登る前に、山頂からの景色を予習できたら</li>
-      </ul>
-      <div class="btns"><a class="btn main" href="yama/">アプリを開く</a><a class="btn sub" href="guide/yama.html">くわしく</a></div>
-    </article>
-    <article class="card app-michi">
-      <div class="card-head"><div class="mark">ミ</div><div><p class="name">MichiMiru</p><p class="meta">道を歩く・スマホ向け</p></div></div>
-      <ul class="scenes">
-        <li>いつもの散歩に、まだ歩いていない道を混ぜられたら</li>
-        <li>歩くたびに、自分だけの地図が塗られていったら</li>
-        <li>家に戻ってくるお散歩コースを、つくってくれたら</li>
-      </ul>
-      <div class="btns"><a class="btn main" href="walk/">アプリを開く</a><a class="btn sub" href="guide/michi.html">くわしく</a></div>
-    </article>
-    <article class="card app-komu">
-      <div class="card-head"><div class="mark">コ</div><div><p class="name">KomuMiru</p><p class="meta">車で走る・スマホ向け</p></div></div>
-      <ul class="scenes">
-        <li>渋滞の中で「降りたほうが早い？」がすぐ分かったら</li>
-        <li>乗るICを、その日の混み具合で選べたら</li>
-        <li>少し遠回りでも、結局早く着く道を選べたら</li>
-      </ul>
-      <div class="btns"><a class="btn main" href="navi/">アプリを開く</a><a class="btn sub" href="guide/komu.html">くわしく</a></div>
-    </article>
-  </div>
+    <h3>Step 2: Install on Your Mac</h3>
+    <ol>
+        <li>Open the downloaded file. If it's a <code>.zip</code>, double-click to extract it.</li>
+        <li>Drag the <code>sbtfix</code> app into your <strong>Applications</strong> folder.</li>
+        <li>Open sbtfix from your Applications folder. You may see a warning since it's from an unsigned developer — right-click and select <strong>Open</strong> to override.</li>
+    </ol>
 
-  <section>
-    <h2>はじめる前に</h2>
-    <div class="box"><ul class="plain">
-      <li>まだ試作中です。画面や機能が変わったり、うまく動かなかったりすることがあります。</li>
-      <li>登録やログインはありません。</li>
-      <li>図鑑や歩いた道などの記録は、使っているスマホやパソコンのブラウザの中に保存されます。ほかの端末とは共有されません。</li>
-      <li>ブラウザの設定で「サイトデータ」を消すと、記録も消えます。大切な記録は、各アプリの「書き出し」で控えを取っておくと安心です。</li>
-      <li>位置情報は、アプリの中で計算に使います。くわしくは各アプリの紹介ページに書いています。</li>
-    </ul></div>
-  </section>
-</main>
+    <h3>Step 3: Connect Your Headphones</h3>
+    <ol>
+        <li>Make sure your Sony headphones are already paired with your Mac (via Bluetooth).</li>
+        <li>Turn on your headphones.</li>
+        <li>sbtfix will automatically detect them and appear in your menu bar.</li>
+    </ol>
 
-<footer class="site"><div class="wrap">
-  <p><span class="series">ミル シリーズ</span>は、個人で作っているアプリです。</p>
-  <p>地図や飛行機などのデータの出典は、各アプリの紹介ページにまとめています。</p>
-  <p>プライバシーポリシーは準備中です。</p>
-</div></footer>
+    <div class="tip-box">
+        <strong>💡 Tip:</strong> If you don't see sbtfix in your menu bar, make sure your headphones are playing audio or are actively connected to your Mac. If problems persist, restart sbtfix from your Applications folder.
+    </div>
+
+    <h2 id="how-to">🎮 How to Use sbtfix</h2>
+    <p>Once running, click the headphones icon () in your menu bar. A dropdown panel appears with all controls:</p>
+    
+    <ul>
+        <li><strong>Noise Cancelling / Ambient Sound:</strong> Click to toggle between the two modes. The current mode is highlighted.</li>
+        <li><strong>Ambient Level:</strong> Drag the slider left or right to adjust the amount of ambient sound (only visible in Ambient mode).</li>
+        <li><strong>Speak-to-Chat:</strong> A simple on/off toggle.</li>
+        <li><strong>Battery Level:</strong> Shown as a percentage and a small battery icon at the top of the panel.</li>
+    </ul>
+    
+    <p>Changes apply instantly — no need to switch anything else on your Mac. Close the panel by clicking anywhere outside of it, or press <code>Escape</code>.</p>
+
+    <h2 id="compatibility">🎯 Compatible Headphones</h2>
+    <p>sbtfix supports a wide range of Sony wireless headphones. Here's the full list:</p>
+    
+    <table>
+        <tr>
+            <th>Headphone Model</th>
+            <th>Supported Features</th>
+        </tr>
+        <tr>
+            <td>WH-1000XM4</td>
+            <td>Full control (NC, Ambient, Speak-to-Chat, Battery)</td>
+        </tr>
+        <tr>
+            <td>WH-1000XM5</td>
+            <td>Full control (NC, Ambient, Speak-to-Chat, Battery)</td>
+        </tr>
+        <tr>
+            <td>WH-1000XM6</td>
+            <td>Full control (NC, Ambient, Speak-to-Chat, Battery)</td>
+        </tr>
+        <tr>
+            <td>WF-1000XM4</td>
+            <td>Full control (NC, Ambient, Speak-to-Chat, Battery)</td>
+        </tr>
+        <tr>
+            <td>WF-1000XM5</td>
+            <td>Full control (NC, Ambient, Speak-to-Chat, Battery)</td>
+        </tr>
+        <tr>
+            <td>LinkBuds S</td>
+            <td>Full control (NC, Ambient, Battery)</td>
+        </tr>
+    </table>
+    
+    <p>If you don't see your model, it's still worth trying — sbtfix may work with other Sony models that support similar Bluetooth commands.</p>
+
+    <h2 id="faq">❓ Frequently Asked Questions</h2>
+    
+    <h3>Is sbtfix free?</h3>
+    <p>Yes! Completely free and open-source. You can even check out the code on GitHub.</p>
+
+    <h3>Does it work with any other headphone brands?</h3>
+    <p>No, sbtfix is specifically designed for Sony headphones that use Sony's proprietary wireless protocol. It won't work with other brands.</p>
+
+    <h3>Will it drain my Mac's battery?</h3>
+    <p>No. sbtfix is extremely lightweight and uses negligible processing power. It's been optimized for efficiency.</p>
+
+    <h3>What macOS versions are supported?</h3>
+    <p>sbtfix requires macOS 12.0 (Monterey) or later. It works on Intel and Apple Silicon Macs (M1/M2/M3/M4).</p>
+
+    <h3>How do I update sbtfix?</h3>
+    <p>You can always visit the <a href="https://github.com/drakeshawn20/sbtfix/releases">releases page</a> to see the latest version and download any updates. New versions are released regularly to add features and fix bugs. We recommend checking every month or two.</p>
+
+    <h3>My headphones aren't detected, what should I do?</h3>
+    <ul>
+        <li>Ensure your headphones are fully powered on and connected to your Mac (check System Settings > Bluetooth).</li>
+        <li>Restart sbtfix — quit from the menu bar and reopen from Applications.</li>
+        <li>Try re-pairing your headphones with your Mac.</li>
+        <li>If it still doesn't work, check GitHub Issues for known problems or report a new bug.</li>
+    </ul>
+
+    <div class="warn-box">
+        <strong>⚠️ Quick Troubleshooting:</strong> If you recently updated your headphone's firmware or your macOS version, try restarting both your Mac and your headphones. This fixes 90% of connection quirks.
+    </div>
+
+    <h2 id="support">📬 Support & Community</h2>
+    <p>Need help or have a feature request? We're here for you!</p>
+    <ul>
+        <li><strong>Report an issue:</strong> Visit the <a href="https://github.com/drakeshawn20/sbtfix/issues">Issues page</a> on GitHub to describe any problems.</li>
+        <li><strong>Feature requests:</strong> You can suggest new features or improvements through the same Issues page.</li>
+        <li><strong>Source code:</strong> Interested in the technical side? The entire project is open-source — explore the repo <a href="https://github.com/drakeshawn20/sbtfix">here</a>.</li>
+    </ul>
+
+    <h2>🏁 Why You'll Love sbtfix</h2>
+    <p>Instead of hunting for your phone, unlocking it, and opening a slow companion app, you just click the sbtfix icon at the top of your screen and adjust what you need in seconds. It's intuitive, reliable, and beautifully integrated with macOS. The menu-bar convenience saves you time every single day, especially if you frequently switch between noise cancelling and ambient mode — perfect for people who work in open offices, commute, or wear headphones all day.</p>
+    
+    <h3>A quick example of how sbtfix improves your day:</h3>
+    <p>Imagine you're on a train, noise cancelling on, listening to your favorite playlist. The conductor announces your stop. Instead of fumbling for your phone, you simply click the sbtfix icon and switch to Ambient mode — instantly hearing the announcement. Then with one more click, you're back to noise cancelling. No missed conversations, no wasted time, no hassles. That's what sbtfix delivers: total control with zero friction.</p>
+
+    <div style="text-align: center; margin: 50px 0 20px;">
+        <a href="https://github.com/drakeshawn20/sbtfix/releases" class="download-btn" style="background: linear-gradient(45deg, #00b894, #0984e3);">⬇️ Get sbtfix — It's Free</a>
+    </div>
+    
+    <p style="text-align: center; font-size: 0.9rem; color: #636e72; margin-top: 30px;">© 2024 sbtfix. This is an unofficial app and is not affiliated with Sony Corporation. All product names are trademarks of their respective owners.</p>
+</div>
 </body>
 </html>
